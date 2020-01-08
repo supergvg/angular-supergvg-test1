@@ -1,0 +1,9 @@
+<label>Type a full or partial url where you would like to show notification.</label>
+
+<form [formGroup]="ruleInputForm">
+  <app-rule-input formControlName="rule"></app-rule-input>
+  <div class="error-container" *ngIf="ruleInputForm?.controls?.rule?.errors?.required">
+    <span></span>
+    <label>URL is Missing</label>
+  </div>
+</form>

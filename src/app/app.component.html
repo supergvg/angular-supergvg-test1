@@ -1,0 +1,14 @@
+<div class="main-container">
+  <label>Where would you like to display your campaign?</label>
+
+  <ng-container *ngIf="!isVisibleRuleInput; else inputRule">
+    <app-new-rule-button (click)="onClickAddRuleHandler()"></app-new-rule-button>
+    <label>Exclusion Rules</label>
+    <app-new-rule-button></app-new-rule-button>
+  </ng-container>
+  <ng-template #inputRule>
+    <app-rule (statusChange)="onStatusChangeHandler($event)"></app-rule>
+    <app-new-rule-button *ngIf="isVisibleAddRuleButton"></app-new-rule-button>
+  </ng-template>
+
+</div>

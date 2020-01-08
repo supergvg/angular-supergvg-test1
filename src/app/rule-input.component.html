@@ -1,0 +1,15 @@
+<select (change)="onRuleTypeChangeHandler($event)">
+    <ng-container *ngFor="let ruleItem of ruleTypes; trackBy: trackByRuleTypes">
+      <option
+        [selected]="ruleItem.selected"
+        [value]="ruleItem.label"
+        >
+        {{ ruleItem.label }}
+      </option>
+    </ng-container>
+  </select>
+
+<input
+  [value]="value.url"
+  (input)="onInputHandler($event)"
+/>
