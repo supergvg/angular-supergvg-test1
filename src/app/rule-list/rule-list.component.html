@@ -1,0 +1,8 @@
+<hr>
+<ng-container *ngFor="let rule of ruleList">
+	<div class="rule-row">
+		<label>{{ rule.ruleType }}</label>
+		<label>{{ rule.ruleValue.ruleType }}</label>
+		<label>{{ rule.ruleValue.url }}</label>
+	</div>
+</ng-container>

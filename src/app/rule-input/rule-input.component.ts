@@ -1,30 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
-export enum RuleType {
-  Contains    = 'Contains',
-  ExactMatch  = 'Exact Match'
-}
-
-export interface IRuleTypeItem {
-  label: RuleType;
-  id: number;
-  selected?: boolean;
-}
-
-export interface IRuleValue {
-  ruleType: RuleType;
-  url: string;
-}
+import { IRuleTypeItem, IRuleValue, RuleContentType } from '../rule-models';
 
 /**
  * Input rule component.
  */
 @Component({
-  selector: 'app-rule-input',
-  templateUrl: './rule-input.component.html',
-  styleUrls: ['./rule-input.component.css'],
-  	providers: [
+	selector: 'app-rule-input',
+	templateUrl: './rule-input.component.html',
+	styleUrls: ['./rule-input.component.scss'],
+	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: RuleInputComponent,
@@ -50,35 +36,35 @@ export class RuleInputComponent implements OnInit {
 	//  Public properties
 	// -----------------------------
 
-  readonly trackByRuleTypes = (index, item: IRuleTypeItem) => `${item.id}`;
-
-  ruleTypes: Array<IRuleTypeItem> = [
-    { id: 0, label: RuleType.Contains },
-    { id: 1, label: RuleType.ExactMatch, selected: true }
-  ];
+	ruleTypes: Array<IRuleTypeItem> = [
+		{ id: 0, label: RuleContentType.Contains },
+		{ id: 1, label: RuleContentType.ExactMatch, selected: true }
+	];
 
 	// -----------------------------
 	//  Public functions
 	// -----------------------------
 
-  onInputHandler(event): void {
-    this.value.url = event.target.value;
-    this.onChange(this.value);
-    this.onTouched();
-  }
+	readonly trackByRuleTypes = (index, item: IRuleTypeItem) => `${item.id}`;
 
-  onRuleTypeChangeHandler(event): void {
-    this.value.ruleType = event.target.value
-    this.onChange(this.value);
-    this.onTouched();
-  }
+	onInputHandler(event): void {
+		this.value.url = event.target.value;
+		this.onChange(this.value);
+		this.onTouched();
+	}
+
+	onRuleTypeChangeHandler(event): void {
+		this.value.ruleType = event.target.value;
+		this.onChange(this.value);
+		this.onTouched();
+	}
 
 	// -----------------------------
 	//  Lifecycle functions
 	// -----------------------------
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 	// -----------------------------
 	//  ControlValueAccessor
@@ -96,7 +82,7 @@ export class RuleInputComponent implements OnInit {
 	}
 
 	writeValue(obj: IRuleValue): void {
-		this.value = obj || { url: '', ruleType: RuleType.ExactMatch };
+		this.value = obj || {url: '', ruleType: RuleContentType.ExactMatch};
 	}
 
 	// -----------------------------
@@ -106,13 +92,13 @@ export class RuleInputComponent implements OnInit {
 	registerOnValidatorChange(fn: () => void): void {}
 
 	validate(control: AbstractControl): ValidationErrors | null {
-    return !this.value || !this.value.ruleType || !this.value.url
-     ? { ...control.errors, required: true }
-     : undefined;
+		return !this.value || !this.value.ruleType || !this.value.url
+			? {...control.errors, required: true}
+			: undefined;
 	}
 
 	// -----------------------------
-	//  Private properties
+	//  Private functions
 	// -----------------------------
 
 	private onChange = (value: IRuleValue) => {};

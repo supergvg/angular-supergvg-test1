@@ -1,14 +1,29 @@
-<div class="main-container">
-  <label>Where would you like to display your campaign?</label>
+<label>Where would you like to display your campaign?</label>
 
-  <ng-container *ngIf="!isVisibleRuleInput; else inputRule">
-    <app-new-rule-button (click)="onClickAddRuleHandler()"></app-new-rule-button>
-    <label>Exclusion Rules</label>
-    <app-new-rule-button></app-new-rule-button>
-  </ng-container>
-  <ng-template #inputRule>
-    <app-rule (statusChange)="onStatusChangeHandler($event)"></app-rule>
-    <app-new-rule-button *ngIf="isVisibleAddRuleButton"></app-new-rule-button>
-  </ng-template>
+<ng-container *ngIf="!isVisibleRuleInput; else inputRule">
+	<app-new-rule-button
+		(click)="onClickAddRuleHandler(RuleType.Display)">
+	</app-new-rule-button>
 
-</div>
+	<label>Exclusion Rules</label>
+
+	<app-new-rule-button
+		(click)="onClickAddRuleHandler(RuleType.Exclude)">
+	</app-new-rule-button>
+
+	<app-rule-list [ruleList]="ruleList"></app-rule-list>
+</ng-container>
+
+<ng-template #inputRule>
+	<app-rule
+		[ruleType]="currentRuleType"
+		(ruleChange)="onRuleChangeHandler($event)"
+		(closeRuleForm)="isVisibleRuleInput = !isVisibleRuleInput"
+		>
+	</app-rule>
+	<app-new-rule-button
+		*ngIf="isVisibleAddRuleButton"
+		(click)="onConfirmNewRule()"
+		>
+	</app-new-rule-button>
+</ng-template>

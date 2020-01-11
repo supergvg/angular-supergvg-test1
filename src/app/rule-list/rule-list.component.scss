@@ -1,0 +1,22 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	
+	hr {
+		width: 100%;
+		border: 0.5px dashed #ccc;
+	}
+	
+	.rule-row {
+		display: flex;
+		flex-direction: row;
+		
+		label {
+			width: 25%;
+		}
+		
+		:last-child {
+			width: 50%;
+		}
+	}
+}
